@@ -1,5 +1,18 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+#// ... existing code ...
+# IDEs and editors
+.idea/
+.project
+#// ... existing code ...
+# Miscellaneous
+/.angular/cache
+.claude/
+settings.local.json
+.sass-cache/
+#// ... existing code ...
+
+
 # Compiled output
 /dist
 /tmp
