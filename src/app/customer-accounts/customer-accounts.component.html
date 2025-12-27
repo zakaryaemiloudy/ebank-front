@@ -1,0 +1,155 @@
+<div class="container mt-4">
+  <div class="card shadow">
+    <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-wallet2 me-2"></i>Customer Accounts
+      </h5>
+      <a routerLink="/customers" class="btn btn-light btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Customers
+      </a>
+    </div>
+    <div class="card-body">
+      <!-- Customer Info -->
+      <div *ngIf="customer" class="alert alert-info mb-4">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-person-circle fs-3 me-3"></i>
+          <div class="flex-grow-1">
+            <strong>Customer:</strong> {{customer.name}}<br>
+            <small class="text-muted"><i class="bi bi-envelope me-1"></i>{{customer.email}}</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Create Account Form -->
+      <div class="mb-3">
+        <button class="btn btn-success" (click)="showCreateAccountForm = !showCreateAccountForm">
+          <i class="bi bi-plus-circle me-1"></i> Create New Account
+        </button>
+        <div *ngIf="showCreateAccountForm" class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">New Account Details</h5>
+            <form [formGroup]="newAccountFormGroup" (ngSubmit)="handleCreateAccount()">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Account Type</label>
+                    <select formControlName="accountType" class="form-select">
+                      <option value="CurrentAccount">Current Account</option>
+                      <option value="SavingAccount">Saving Account</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Initial Balance (MAD)</label>
+                    <input type="number" formControlName="initialBalance" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="newAccountFormGroup.get('accountType')?.value === 'SavingAccount'" class="mb-3">
+                <label class="form-label">Interest Rate (%)</label>
+                <input type="number" formControlName="interestRate" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-primary" [disabled]="newAccountFormGroup.invalid">
+                Save Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="accounts$ | async as accounts; else loadingOrError">
+        <div *ngIf="accounts.length === 0" class="alert alert-warning">
+          <i class="bi bi-info-circle me-2"></i>No accounts found for this customer.
+        </div>
+
+        <div class="table-responsive" *ngIf="accounts.length > 0">
+          <table class="table table-hover align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>Account ID</th>
+                <th>Type</th>
+                <th>Created At</th>
+                <th class="text-end">Balance</th>
+                <th>Details</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let acc of accounts">
+                <td>
+                  <code class="text-primary">{{acc.id | slice:0:18}}...</code>
+                </td>
+                <td>
+                  <span [class]="acc.type === 'SavingAccount' ? 'badge bg-success' : 'badge bg-primary'">
+                    <i [class]="acc.type === 'SavingAccount' ? 'bi bi-piggy-bank' : 'bi bi-credit-card'"></i>
+                    {{acc.type === 'SavingAccount' ? 'Saving' : 'Current'}}
+                  </span>
+                </td>
+                <td>
+                  <i class="bi bi-calendar me-1 text-muted"></i>
+                  {{acc.createdAt | date:'dd/MM/yyyy HH:mm'}}
+                </td>
+                <td class="text-end">
+                  <strong class="text-success">{{acc.balance | number:'1.2-2'}} DH</strong>
+                </td>
+                <td>
+                  <span *ngIf="acc.type === 'SavingAccount'" class="text-muted">
+                    <i class="bi bi-percent me-1"></i>Interest: {{acc.interestRate}}%
+                  </span>
+                  <span *ngIf="acc.type === 'CurrentAccount'" class="text-muted">
+                    <i class="bi bi-arrow-down-circle me-1"></i>Overdraft: {{acc.overDraft | number:'1.2-2'}} DH
+                  </span>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-info btn-sm me-1" (click)="handleAccountOperations(acc)">
+                    <i class="bi bi-eye me-1"></i> Operations
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="handleDeleteAccount(acc)">
+                    <i class="bi bi-trash me-1"></i> Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Summary -->
+        <div *ngIf="accounts.length > 0" class="card bg-light mt-3">
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <h6 class="text-muted">Total Accounts</h6>
+                <h4>{{accounts.length}}</h4>
+              </div>
+              <div class="col-md-4">
+                <h6 class="text-muted">Total Balance</h6>
+                <h4 class="text-success">{{getTotalBalance(accounts) | number:'1.2-2'}} DH</h4>
+              </div>
+              <div class="col-md-4">
+                <h6 class="text-muted">Average Balance</h6>
+                <h4 class="text-info">{{getTotalBalance(accounts) / accounts.length | number:'1.2-2'}} DH</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #loadingOrError>
+        <ng-container *ngIf="errorMessage; else loading">
+          <div class="alert alert-danger">
+            <i class="bi bi-exclamation-triangle me-2"></i>{{errorMessage}}
+          </div>
+        </ng-container>
+        <ng-template #loading>
+          <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading accounts...</p>
+          </div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </div>
+</div>

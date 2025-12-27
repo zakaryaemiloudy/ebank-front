@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <i class="bi bi-bank2 me-2 fs-4"></i>
+      <span class="fw-bold">E-BANK</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto" *ngIf="authService.isAuthenticated()">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/accounts" routerLinkActive="active">
+            <i class="bi bi-wallet2 me-1"></i> Accounts
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="customersDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-people me-1"></i> Customers
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="customersDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/customers">
+                <i class="bi bi-search me-2"></i> Search Customers
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/new-customer">
+                <i class="bi bi-person-plus me-2"></i> New Customer
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <div *ngIf="!authService.isAuthenticated()" class="me-2">
+          <a class="btn btn-outline-light" routerLink="/login">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Login
+          </a>
+        </div>
+        <div *ngIf="authService.isAuthenticated()" class="dropdown">
+          <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#"
+             id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-circle me-2 fs-5"></i>
+            <span>{{ authService.authenticatedUser?.username }}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item" (click)="handleLogout()" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right me-2"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

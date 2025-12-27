@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Login</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="loginFormGroup" (ngSubmit)="handleLogin()">
+            <div class="form-group mb-3">
+              <label for="username">Username</label>
+              <input type="text" id="username" formControlName="username" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+              <label for="password">Password</label>
+              <input type="password" id="password" formControlName="password" class="form-control">
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="loginFormGroup.invalid">Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.card {
+  border: none;
+  border-radius: 10px;
+}
+
+.card-body canvas {
+  max-height: 300px;
+}
