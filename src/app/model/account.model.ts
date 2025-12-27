@@ -15,12 +15,18 @@ export interface AccountOperation {
   description:   string;
 }
 
+export enum AccountStatus {
+  CREATED = 'CREATED',
+  ACTIVATED = 'ACTIVATED',
+  SUSPENDED = 'SUSPENDED'
+}
+
 export interface BankAccount {
   type:         string;
   id:           string;
   balance:      number;
   createdAt:    Date;
-  status:       string | null;
+  status:       AccountStatus;
   customerDTO:  CustomerDTO;
   interestRate?: number;
   overDraft?:   number;

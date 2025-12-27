@@ -46,4 +46,8 @@ export class AccountsService {
   public deleteAccount(accountId: string): Observable<void> {
     return this.http.delete<void>(environment.backendHost + '/accounts/' + accountId);
   }
+
+  public updateAccountStatus(accountId: string, status: string): Observable<BankAccount> {
+    return this.http.put<BankAccount>(environment.backendHost + '/accounts/' + accountId + '/status', { status: status });
+  }
 }

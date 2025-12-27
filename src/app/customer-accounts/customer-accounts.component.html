@@ -69,6 +69,7 @@
               <tr>
                 <th>Account ID</th>
                 <th>Type</th>
+                <th>Status</th>
                 <th>Created At</th>
                 <th class="text-end">Balance</th>
                 <th>Details</th>
@@ -87,6 +88,11 @@
                   </span>
                 </td>
                 <td>
+                  <span [ngClass]="acc.status === 'CREATED' ? 'badge bg-info' : (acc.status === 'ACTIVATED' ? 'badge bg-success' : 'badge bg-danger')">
+                    {{acc.status}}
+                  </span>
+                </td>
+                <td>
                   <i class="bi bi-calendar me-1 text-muted"></i>
                   {{acc.createdAt | date:'dd/MM/yyyy HH:mm'}}
                 </td>
@@ -102,6 +108,9 @@
                   </span>
                 </td>
                 <td class="text-center">
+                  <button class="btn btn-warning btn-sm me-1" [routerLink]="['/account-details', acc.id]">
+                    <i class="bi bi-gear me-1"></i> Details
+                  </button>
                   <button class="btn btn-info btn-sm me-1" (click)="handleAccountOperations(acc)">
                     <i class="bi bi-eye me-1"></i> Operations
                   </button>

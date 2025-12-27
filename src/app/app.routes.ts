@@ -7,6 +7,7 @@ import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
+import { AccountDetailsComponent } from './account-details/account-details.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path: 'accounts', component: AccountsComponent, canActivate: [AuthenticationGuard] },
   { path: 'new-customer', component: NewCustomerComponent, canActivate: [AuthenticationGuard] },
   { path: 'edit-customer/:id', component: EditCustomerComponent, canActivate: [AuthenticationGuard] },
-  { path: 'customer-accounts/:id', component: CustomerAccountsComponent, canActivate: [AuthenticationGuard] }
+  { path: 'customer-accounts/:id', component: CustomerAccountsComponent, canActivate: [AuthenticationGuard] },
+  { path: 'account-details/:id', component: AccountDetailsComponent, canActivate: [AuthenticationGuard] }
 ];

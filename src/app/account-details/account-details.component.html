@@ -1,0 +1,86 @@
+<div class="container mt-4">
+  <div class="card shadow" *ngIf="account$ | async as account; else loadingOrError">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-info-circle-fill me-2"></i>Account Details & Management
+      </h5>
+      <a [routerLink]="['/customer-accounts', account.customerDTO.id]" class="btn btn-light btn-sm">
+        <i class="bi bi-arrow-left me-1"></i> Back to Accounts
+      </a>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="card-title border-bottom pb-2 mb-3">Information</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Account ID</span>
+              <code class="text-primary">{{account.id}}</code>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Account Type</span>
+              <span [class]="account.type === 'SavingAccount' ? 'badge bg-success' : 'badge bg-primary'">
+                {{account.type === 'SavingAccount' ? 'Saving' : 'Current'}}
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Customer Name</span>
+              <strong>{{account.customerDTO.name}}</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Customer Email</span>
+              <small class="text-muted">{{account.customerDTO.email}}</small>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Created At</span>
+              <span>{{account.createdAt | date:'dd/MM/yyyy HH:mm'}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Current Balance</span>
+              <strong class="text-success">{{account.balance | number:'1.2-2'}} DH</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="account.type === 'SavingAccount'">
+              <span>Interest Rate</span>
+              <span class="text-muted">{{account.interestRate}} %</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="account.type === 'CurrentAccount'">
+              <span>Overdraft</span>
+              <span class="text-muted">{{account.overDraft | number:'1.2-2'}} DH</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span>Current Status</span>
+              <span class="badge" [ngClass]="getBadgeClass(account.status)">
+                {{account.status}}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center border-start">
+          <h5 class="card-title border-bottom pb-2 mb-3 w-100 text-center">Actions</h5>
+          <div class="text-center">
+            <p *ngIf="account.status === AccountStatusEnum.CREATED" class="text-info mb-3">
+              <i class="bi bi-info-circle me-1"></i> This account is newly created.
+            </p>
+            <button class="btn btn-lg shadow-sm"
+                    [ngClass]="account.status === AccountStatusEnum.ACTIVATED ? 'btn-danger' : 'btn-success'"
+                    (click)="handleToggleStatus(account.status)">
+              <i class="bi" [ngClass]="account.status === AccountStatusEnum.ACTIVATED ? 'bi-pause-circle' : 'bi-play-circle'"></i>
+              {{ account.status === AccountStatusEnum.ACTIVATED ? 'Suspend Account' : 'Activate Account' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loadingOrError>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      <i class="bi bi-exclamation-triangle me-2"></i>{{errorMessage}}
+    </div>
+    <div *ngIf="!errorMessage" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+</div>
