@@ -56,6 +56,10 @@ export class AccountDetailsComponent implements OnInit {
     });
   }
 
+  handleAccountOperations() {
+    this.router.navigateByUrl('/accounts', { state: { accountId: this.accountId } });
+  }
+
   getBadgeClass(status: AccountStatus): string {
     switch (status) {
       case AccountStatus.CREATED: return 'bg-info';
