@@ -1,75 +1,97 @@
-<div class="container mt-4">
-  <div class="card shadow" *ngIf="account$ | async as account; else loadingOrError">
-    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-      <h5 class="mb-0">
-        <i class="bi bi-info-circle-fill me-2"></i>Account Details & Management
+<div class="container py-4">
+  <div class="card border-0 shadow-sm" *ngIf="account$ | async as account; else loadingOrError">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold text-dark">
+        <i class="bi bi-gear-fill me-2 text-primary"></i>Product Management
       </h5>
-      <a [routerLink]="['/customer-accounts', account.customerDTO.id]" class="btn btn-light btn-sm">
-        <i class="bi bi-arrow-left me-1"></i> Back to Accounts
+      <a [routerLink]="['/customer-accounts', account.customerDTO.id]" class="btn btn-light btn-sm px-3 fw-bold text-muted">
+        <i class="bi bi-arrow-left me-1"></i> Portfolio
       </a>
     </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <h5 class="card-title border-bottom pb-2 mb-3">Information</h5>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Account ID</span>
-              <code class="text-primary">{{account.id}}</code>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Account Type</span>
-              <span [class]="account.type === 'SavingAccount' ? 'badge bg-success' : 'badge bg-primary'">
-                {{account.type === 'SavingAccount' ? 'Saving' : 'Current'}}
-              </span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Customer Name</span>
-              <strong>{{account.customerDTO.name}}</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Customer Email</span>
-              <small class="text-muted">{{account.customerDTO.email}}</small>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Created At</span>
-              <span>{{account.createdAt | date:'dd/MM/yyyy HH:mm'}}</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Current Balance</span>
-              <strong class="text-success">{{account.balance | number:'1.2-2'}} DH</strong>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="account.type === 'SavingAccount'">
-              <span>Interest Rate</span>
-              <span class="text-muted">{{account.interestRate}} %</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="account.type === 'CurrentAccount'">
-              <span>Overdraft</span>
-              <span class="text-muted">{{account.overDraft | number:'1.2-2'}} DH</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <span>Current Status</span>
-              <span class="badge" [ngClass]="getBadgeClass(account.status)">
-                {{account.status}}
-              </span>
-            </li>
-          </ul>
+    <div class="card-body p-4">
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="d-flex align-items-center mb-4">
+            <div [class]="account.type === 'SavingAccount' ? 'bg-success bg-opacity-10 text-success' : 'bg-primary bg-opacity-10 text-primary'"
+                 class="rounded-circle p-3 me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+              <i [class]="account.type === 'SavingAccount' ? 'bi bi-piggy-bank fs-2' : 'bi bi-credit-card fs-2'"></i>
+            </div>
+            <div>
+              <h4 class="fw-bold text-dark mb-0">{{account.type === 'SavingAccount' ? 'Saving Account' : 'Current Account'}}</h4>
+              <code class="extra-small text-muted">{{account.id}}</code>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded">
+                <small class="text-muted d-block text-uppercase extra-small fw-bold mb-1">Customer</small>
+                <div class="fw-bold text-dark">{{account.customerDTO.name}}</div>
+                <small class="text-muted">{{account.customerDTO.email}}</small>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="p-3 bg-light rounded h-100">
+                <small class="text-muted d-block text-uppercase extra-small fw-bold mb-1">Status</small>
+                <span class="badge" [ngClass]="getBadgeClass(account.status)">
+                  {{account.status}}
+                </span>
+                <div class="extra-small text-muted mt-2">Opened {{account.createdAt | date:'mediumDate'}}</div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="p-4 bg-dark text-white rounded shadow-sm d-flex justify-content-between align-items-center">
+                <div>
+                  <small class="text-white text-opacity-50 text-uppercase extra-small fw-bold d-block mb-1">Available Balance</small>
+                  <h2 class="mb-0 fw-bold">{{account.balance | number:'1.2-2'}} <small class="fs-6 fw-normal text-opacity-75">DH</small></h2>
+                </div>
+                <div class="text-end">
+                  <div *ngIf="account.type === 'SavingAccount'">
+                    <small class="text-white text-opacity-50 text-uppercase extra-small fw-bold d-block mb-1">Yield</small>
+                    <span class="fw-bold text-success">+{{account.interestRate}}% APY</span>
+                  </div>
+                  <div *ngIf="account.type === 'CurrentAccount'">
+                    <small class="text-white text-opacity-50 text-uppercase extra-small fw-bold d-block mb-1">Facility</small>
+                    <span class="fw-bold text-info">{{account.overDraft | number:'1.2-2'}} DH</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6 d-flex flex-column justify-content-center align-items-center border-start">
-          <h5 class="card-title border-bottom pb-2 mb-3 w-100 text-center">Actions</h5>
-          <div class="text-center">
-            <p *ngIf="account.status === AccountStatusEnum.CREATED" class="text-info mb-3">
-              <i class="bi bi-info-circle me-1"></i> This account is newly created.
-            </p>
-            <button class="btn btn-lg shadow-sm mb-2 w-100"
-                    [ngClass]="account.status === AccountStatusEnum.ACTIVATED ? 'btn-danger' : 'btn-success'"
-                    (click)="handleToggleStatus(account.status)">
-              <i class="bi" [ngClass]="account.status === AccountStatusEnum.ACTIVATED ? 'bi-pause-circle' : 'bi-play-circle'"></i>
-              {{ account.status === AccountStatusEnum.ACTIVATED ? 'Suspend Account' : 'Activate Account' }}
-            </button>
-            <button class="btn btn-info btn-lg shadow-sm w-100" (click)="handleAccountOperations()">
-              <i class="bi bi-cash-stack me-1"></i> View Operations
-            </button>
+
+        <div class="col-lg-5">
+          <div class="card bg-light border-0 h-100">
+            <div class="card-body p-4 d-flex flex-column justify-content-center">
+              <h6 class="fw-bold text-dark text-center mb-4 text-uppercase small letter-spacing-1">Control Center</h6>
+
+              <div *ngIf="account.status.toString() === 'CREATED'" class="alert bg-white border-0 shadow-sm mb-4">
+                <div class="d-flex">
+                  <i class="bi bi-info-circle-fill text-info me-3 fs-4"></i>
+                  <small class="text-muted">This account is awaiting initial activation to start processing transactions.</small>
+                </div>
+              </div>
+
+              <div class="d-grid gap-3">
+                <button type="button" class="btn btn-sm py-3 fw-bold shadow-sm d-flex align-items-center justify-content-center"
+                        [ngClass]="account.status && account.status.toString() === 'ACTIVATED' ? 'btn-outline-danger' : 'btn-success'"
+                        (click)="handleToggleStatus(account.status)">
+                  <i class="bi me-2 fs-5" [ngClass]="account.status && account.status.toString() === 'ACTIVATED' ? 'bi-pause-circle' : 'bi-play-circle'"></i>
+                  {{ account.status && account.status.toString() === 'ACTIVATED' ? 'SUSPEND ACCOUNT' : 'ACTIVATE ACCOUNT' }}
+                </button>
+
+                <button type="button" class="btn btn-primary btn-sm py-3 fw-bold shadow-sm d-flex align-items-center justify-content-center"
+                        (click)="handleAccountOperations()"
+                        [disabled]="account.status && account.status.toString() !== 'ACTIVATED'"
+                        [title]="account.status && account.status.toString() !== 'ACTIVATED' ? 'Operations are disabled for ' + account.status + ' accounts' : 'View all operations'">
+                  <i class="bi bi-cash-stack me-2 fs-5"></i> VIEW ALL OPERATIONS
+                </button>
+              </div>
+
+              <div class="mt-4 text-center">
+                <p class="extra-small text-muted mb-0">Safety first: suspending an account prevents any incoming or outgoing transactions instantly.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,13 +99,14 @@
   </div>
 
   <ng-template #loadingOrError>
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      <i class="bi bi-exclamation-triangle me-2"></i>{{errorMessage}}
+    <div *ngIf="errorMessage" class="alert alert-danger border-0 shadow-sm mx-auto mt-4" style="max-width: 600px;">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>{{errorMessage}}
     </div>
     <div *ngIf="!errorMessage" class="text-center py-5">
-      <div class="spinner-border text-primary" role="status">
+      <div class="spinner-border text-primary spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
+      <p class="mt-3 text-muted small">Synchronizing with ledger...</p>
     </div>
   </ng-template>
 </div>

@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   currentAccounts = 0;
   customers: Customer[] = [];
   recentAccounts: BankAccount[] = [];
+  today = new Date();
 
   constructor(
     private customerService: CustomerService,

@@ -1,146 +1,156 @@
-<div class="container-fluid mt-4">
-  <h2 class="mb-4"><i class="bi bi-speedometer2 me-2"></i>Dashboard</h2>
-  
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-dark mb-1">Financial Overview</h2>
+      <p class="text-muted small mb-0">Monitor your banking ecosystem at a glance</p>
+    </div>
+    <div class="text-end">
+      <span class="badge bg-white text-dark shadow-sm py-2 px-3 border">
+        <i class="bi bi-calendar3 me-2 text-primary"></i> {{ today | date:'fullDate' }}
+      </span>
+    </div>
+  </div>
+
   <!-- Stats Cards -->
-  <div class="row mb-4">
-    <div class="col-md-3 mb-3">
-      <div class="card bg-primary text-white shadow h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="text-uppercase mb-1 opacity-75">Total Customers</h6>
-              <h2 class="mb-0 fw-bold">{{totalCustomers}}</h2>
+  <div class="row g-4 mb-5">
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100 bg-primary text-white">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="bg-white bg-opacity-25 rounded p-2">
+              <i class="bi bi-people-fill fs-4"></i>
             </div>
-            <i class="bi bi-people fs-1 opacity-50"></i>
           </div>
+          <h3 class="fw-bold mb-1">{{totalCustomers}}</h3>
+          <p class="text-white text-opacity-75 small mb-0">Total Customers</p>
         </div>
-        <div class="card-footer bg-transparent border-0">
-          <a routerLink="/customers" class="text-white text-decoration-none small">
-            View Details <i class="bi bi-arrow-right"></i>
+        <div class="card-footer bg-black bg-opacity-10 border-0 py-2">
+          <a routerLink="/customers" class="text-white text-decoration-none extra-small fw-bold">
+            MANAGE CUSTOMERS <i class="bi bi-chevron-right ms-1"></i>
           </a>
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="card bg-success text-white shadow h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="text-uppercase mb-1 opacity-75">Total Accounts</h6>
-              <h2 class="mb-0 fw-bold">{{totalAccounts}}</h2>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100 bg-dark text-white">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="bg-white bg-opacity-10 rounded p-2">
+              <i class="bi bi-wallet2 fs-4"></i>
             </div>
-            <i class="bi bi-wallet2 fs-1 opacity-50"></i>
           </div>
+          <h3 class="fw-bold mb-1">{{totalAccounts}}</h3>
+          <p class="text-white text-opacity-75 small mb-0">Active Accounts</p>
         </div>
-        <div class="card-footer bg-transparent border-0">
-          <a routerLink="/accounts" class="text-white text-decoration-none small">
-            View Details <i class="bi bi-arrow-right"></i>
+        <div class="card-footer bg-white bg-opacity-10 border-0 py-2">
+          <a routerLink="/accounts" class="text-white text-decoration-none extra-small fw-bold">
+            VIEW ALL ACCOUNTS <i class="bi bi-chevron-right ms-1"></i>
           </a>
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="card bg-info text-white shadow h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="text-uppercase mb-1 opacity-75">Total Balance</h6>
-              <h2 class="mb-0 fw-bold">{{totalBalance | number:'1.0-0'}}</h2>
-              <small class="opacity-75">DH</small>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100 bg-success text-white">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="bg-white bg-opacity-25 rounded p-2">
+              <i class="bi bi-bank fs-4"></i>
             </div>
-            <i class="bi bi-cash-stack fs-1 opacity-50"></i>
           </div>
+          <h3 class="fw-bold mb-1">{{totalBalance | number:'1.0-0'}} <small class="fs-6 fw-normal">DH</small></h3>
+          <p class="text-white text-opacity-75 small mb-0">Total Liquidity</p>
         </div>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="card bg-warning text-dark shadow h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="text-uppercase mb-1">Saving Accounts</h6>
-              <h2 class="mb-0 fw-bold">{{savingAccounts}}</h2>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm h-100 bg-warning text-dark">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div class="bg-dark bg-opacity-10 rounded p-2">
+              <i class="bi bi-piggy-bank-fill fs-4"></i>
             </div>
-            <i class="bi bi-piggy-bank fs-1 opacity-50"></i>
           </div>
+          <h3 class="fw-bold mb-1">{{savingAccounts}}</h3>
+          <p class="text-dark text-opacity-75 small mb-0">Saving Accounts</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row g-4 mb-4">
     <!-- Account Types Distribution -->
-    <div class="col-md-6 mb-4">
-      <div class="card shadow h-100">
-        <div class="card-header bg-white">
-          <h6 class="mb-0"><i class="bi bi-pie-chart me-2"></i>Account Types Distribution</h6>
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0 py-3">
+          <h6 class="fw-bold mb-0">Portfolio Allocation</h6>
         </div>
         <div class="card-body">
           <div class="mb-4">
-            <div class="d-flex justify-content-between mb-1">
-              <span><i class="bi bi-piggy-bank text-success me-2"></i>Saving Accounts</span>
-              <span class="fw-bold">{{savingAccounts}} ({{getSavingPercentage() | number:'1.0-0'}}%)</span>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="small fw-bold"><i class="bi bi-circle-fill text-success me-2 small"></i>Saving Accounts</span>
+              <span class="small text-muted">{{getSavingPercentage() | number:'1.0-0'}}%</span>
             </div>
-            <div class="progress" style="height: 25px;">
-              <div class="progress-bar bg-success" role="progressbar" 
+            <div class="progress rounded-pill" style="height: 8px;">
+              <div class="progress-bar bg-success" role="progressbar"
                    [style.width.%]="getSavingPercentage()">
               </div>
             </div>
           </div>
-          <div class="mb-3">
-            <div class="d-flex justify-content-between mb-1">
-              <span><i class="bi bi-credit-card text-primary me-2"></i>Current Accounts</span>
-              <span class="fw-bold">{{currentAccounts}} ({{getCurrentPercentage() | number:'1.0-0'}}%)</span>
+          <div class="mb-4">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="small fw-bold"><i class="bi bi-circle-fill text-primary me-2 small"></i>Current Accounts</span>
+              <span class="small text-muted">{{getCurrentPercentage() | number:'1.0-0'}}%</span>
             </div>
-            <div class="progress" style="height: 25px;">
-              <div class="progress-bar bg-primary" role="progressbar" 
+            <div class="progress rounded-pill" style="height: 8px;">
+              <div class="progress-bar bg-primary" role="progressbar"
                    [style.width.%]="getCurrentPercentage()">
               </div>
             </div>
           </div>
-          <hr>
-          <div class="row text-center">
-            <div class="col-6">
-              <span class="badge bg-success fs-6 px-3 py-2">
-                <i class="bi bi-piggy-bank me-1"></i> {{savingAccounts}} Saving
-              </span>
+
+          <div class="bg-light rounded p-3 d-flex justify-content-around mt-auto">
+            <div class="text-center">
+              <div class="small text-muted mb-1">Savings</div>
+              <div class="fw-bold text-success">{{savingAccounts}}</div>
             </div>
-            <div class="col-6">
-              <span class="badge bg-primary fs-6 px-3 py-2">
-                <i class="bi bi-credit-card me-1"></i> {{currentAccounts}} Current
-              </span>
+            <div class="vr"></div>
+            <div class="text-center">
+              <div class="small text-muted mb-1">Current</div>
+              <div class="fw-bold text-primary">{{currentAccounts}}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Customers List -->
-    <div class="col-md-6 mb-4">
-      <div class="card shadow h-100">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center">
-          <h6 class="mb-0"><i class="bi bi-people me-2"></i>Customers</h6>
-          <a routerLink="/new-customer" class="btn btn-primary btn-sm">
-            <i class="bi bi-plus"></i> Add
+    <!-- Top Customers List -->
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+          <h6 class="fw-bold mb-0">Recent Customers</h6>
+          <a routerLink="/customers" class="btn btn-outline-primary btn-xs py-1 px-2 border-0 fw-bold extra-small">
+            VIEW ALL
           </a>
         </div>
         <div class="card-body p-0">
           <div class="table-responsive">
-            <table class="table table-hover mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let c of customers">
-                  <td><span class="badge bg-secondary">{{c.id}}</span></td>
-                  <td>
-                    <i class="bi bi-person-circle me-2 text-primary"></i>{{c.name}}
+            <table class="table table-hover align-middle mb-0">
+              <tbody class="border-top-0">
+                <tr *ngFor="let c of customers | slice:0:5">
+                  <td class="ps-4 py-3">
+                    <div class="d-flex align-items-center">
+                      <div class="bg-light rounded-circle p-2 me-3 text-primary d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                        <i class="bi bi-person-fill small"></i>
+                      </div>
+                      <span class="fw-bold text-dark small">{{c.name}}</span>
+                    </div>
                   </td>
                   <td class="text-muted small">{{c.email}}</td>
+                  <td class="text-end pe-4">
+                    <button class="btn btn-light btn-sm rounded-circle border-0" title="Quick View">
+                      <i class="bi bi-chevron-right small"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -153,35 +163,41 @@
   <!-- Recent Accounts -->
   <div class="row">
     <div class="col-12">
-      <div class="card shadow">
-        <div class="card-header bg-white">
-          <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>Recent Accounts</h6>
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-0 py-3">
+          <h6 class="fw-bold mb-0">New Accounts Registry</h6>
         </div>
         <div class="card-body p-0">
           <div class="table-responsive">
-            <table class="table table-hover mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th>Account ID</th>
+            <table class="table table-hover align-middle mb-0">
+              <thead class="bg-light">
+                <tr class="extra-small text-muted text-uppercase">
+                  <th class="ps-4">Reference</th>
                   <th>Type</th>
-                  <th>Customer</th>
-                  <th>Created At</th>
-                  <th class="text-end">Balance</th>
+                  <th>Primary Holder</th>
+                  <th>Open Date</th>
+                  <th class="text-end pe-4">Current Balance</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let acc of recentAccounts">
-                  <td><code class="text-primary">{{acc.id | slice:0:15}}...</code></td>
+                  <td class="ps-4">
+                    <code class="extra-small bg-light px-2 py-1 rounded text-primary">{{acc.id | slice:0:15}}...</code>
+                  </td>
                   <td>
-                    <span [class]="acc.type === 'SavingAccount' ? 'badge bg-success' : 'badge bg-primary'">
+                    <span [class]="acc.type === 'SavingAccount' ? 'badge bg-success bg-opacity-10 text-success' : 'badge bg-primary bg-opacity-10 text-primary'">
                       {{acc.type === 'SavingAccount' ? 'Saving' : 'Current'}}
                     </span>
                   </td>
                   <td>
-                    <i class="bi bi-person me-1"></i>{{acc.customerDTO.name}}
+                    <div class="small fw-medium">{{acc.customerDTO.name}}</div>
                   </td>
-                  <td>{{acc.createdAt | date:'dd/MM/yyyy'}}</td>
-                  <td class="text-end text-success fw-bold">{{acc.balance | number:'1.2-2'}} DH</td>
+                  <td>
+                    <small class="text-muted">{{acc.createdAt | date:'mediumDate'}}</small>
+                  </td>
+                  <td class="text-end pe-4">
+                    <span class="fw-bold text-dark small">{{acc.balance | number:'1.2-2'}} DH</span>
+                  </td>
                 </tr>
               </tbody>
             </table>

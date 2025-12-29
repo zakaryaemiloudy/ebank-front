@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AccountsService } from '../services/accounts.service';
-import { AccountDetails } from '../model/account.model';
+import { AccountDetails, AccountStatus } from '../model/account.model';
 
 @Component({
   selector: 'app-accounts',
@@ -19,6 +19,7 @@ export class AccountsComponent implements OnInit {
   accountObservable!: Observable<AccountDetails>;
   operationFromGroup!: FormGroup;
   errorMessage!: string;
+  AccountStatusEnum = AccountStatus;
 
   constructor(private fb: FormBuilder, private accountService: AccountsService) {}
 

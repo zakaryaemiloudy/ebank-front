@@ -46,12 +46,13 @@ export class AccountDetailsComponent implements OnInit {
       newStatus = AccountStatus.SUSPENDED;
     }
 
-    this.accountsService.updateAccountStatus(this.accountId, newStatus).subscribe({
+    this.accountsService.updateAccountStatus(this.accountId, newStatus.toString()).subscribe({
       next: () => {
         this.loadAccount();
       },
       error: err => {
         this.errorMessage = err.message;
+        alert('Error updating account status: ' + err.message);
       }
     });
   }

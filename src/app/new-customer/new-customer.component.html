@@ -1,52 +1,56 @@
-<div class="container mt-4">
+<div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0"><i class="bi bi-person-plus me-2"></i>New Customer</h5>
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-4 text-center">
+          <div class="bg-primary bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+            <i class="bi bi-person-plus-fill text-primary fs-2"></i>
+          </div>
+          <h4 class="fw-bold text-dark mb-0">New Customer</h4>
+          <p class="text-muted small">Register a new client in the system</p>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
           <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()">
             <div class="mb-3">
-              <label class="form-label">Name <span class="text-danger">*</span></label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-person"></i></span>
-                <input type="text" formControlName="name" class="form-control" 
-                       placeholder="Enter customer name"
+              <label class="form-label small fw-bold text-muted">FULL NAME</label>
+              <div class="input-group input-group-sm shadow-sm rounded">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-person text-muted"></i></span>
+                <input type="text" formControlName="name" class="form-control border-start-0 ps-0"
+                       placeholder="e.g. John Doe"
                        [class.is-invalid]="newCustomerFormGroup.controls['name'].touched && newCustomerFormGroup.controls['name'].invalid">
               </div>
-              <div class="text-danger small mt-1" 
+              <div class="text-danger extra-small mt-1"
                    *ngIf="newCustomerFormGroup.controls['name'].touched && newCustomerFormGroup.controls['name'].errors?.['required']">
                 Name is required
               </div>
-              <div class="text-danger small mt-1" 
+              <div class="text-danger extra-small mt-1"
                    *ngIf="newCustomerFormGroup.controls['name'].touched && newCustomerFormGroup.controls['name'].errors?.['minlength']">
                 Name must be at least 4 characters
               </div>
             </div>
             <div class="mb-4">
-              <label class="form-label">Email <span class="text-danger">*</span></label>
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                <input type="email" formControlName="email" class="form-control" 
-                       placeholder="Enter email address"
+              <label class="form-label small fw-bold text-muted">EMAIL ADDRESS</label>
+              <div class="input-group input-group-sm shadow-sm rounded">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+                <input type="email" formControlName="email" class="form-control border-start-0 ps-0"
+                       placeholder="john.doe@example.com"
                        [class.is-invalid]="newCustomerFormGroup.controls['email'].touched && newCustomerFormGroup.controls['email'].invalid">
               </div>
-              <div class="text-danger small mt-1" 
+              <div class="text-danger extra-small mt-1"
                    *ngIf="newCustomerFormGroup.controls['email'].touched && newCustomerFormGroup.controls['email'].errors?.['required']">
                 Email is required
               </div>
-              <div class="text-danger small mt-1" 
+              <div class="text-danger extra-small mt-1"
                    *ngIf="newCustomerFormGroup.controls['email'].touched && newCustomerFormGroup.controls['email'].errors?.['email']">
                 Please enter a valid email address
               </div>
             </div>
-            <div class="d-flex gap-2">
-              <button type="submit" class="btn btn-primary" [disabled]="newCustomerFormGroup.invalid">
-                <i class="bi bi-check-circle me-1"></i> Save Customer
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-sm py-2 fw-bold" [disabled]="newCustomerFormGroup.invalid">
+                Save Customer <i class="bi bi-check2-circle ms-1"></i>
               </button>
-              <a routerLink="/customers" class="btn btn-secondary">
-                <i class="bi bi-x-circle me-1"></i> Cancel
+              <a routerLink="/customers" class="btn btn-light btn-sm py-2 text-muted fw-bold">
+                Go Back
               </a>
             </div>
           </form>

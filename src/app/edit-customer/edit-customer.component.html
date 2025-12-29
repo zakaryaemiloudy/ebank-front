@@ -1,44 +1,54 @@
-<div class="container mt-4">
+<div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow">
-        <div class="card-header bg-success text-white">
-          <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Edit Customer</h5>
+    <div class="col-md-6 col-lg-5">
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-4 text-center">
+          <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+            <i class="bi bi-pencil-square text-success fs-2"></i>
+          </div>
+          <h4 class="fw-bold text-dark mb-0">Edit Customer</h4>
+          <p class="text-muted small">Update customer information</p>
         </div>
-        <div class="card-body">
-          <div *ngIf="isLoading" class="text-center py-4">
-            <div class="spinner-border text-primary" role="status">
+        <div class="card-body p-4">
+          <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
           </div>
-          
+
           <form *ngIf="!isLoading" [formGroup]="editCustomerFormGroup" (ngSubmit)="handleUpdateCustomer()">
             <div class="mb-3">
-              <label class="form-label">Customer ID</label>
-              <input type="text" class="form-control" [value]="customerId" disabled>
+              <label class="form-label small fw-bold text-muted">CUSTOMER ID</label>
+              <input type="text" class="form-control form-control-sm bg-light text-muted" [value]="customerId" disabled>
             </div>
             <div class="mb-3">
-              <label class="form-label">Name <span class="text-danger">*</span></label>
-              <input type="text" formControlName="name" class="form-control" 
-                     [class.is-invalid]="editCustomerFormGroup.controls['name'].touched && editCustomerFormGroup.controls['name'].invalid">
-              <div class="invalid-feedback">
+              <label class="form-label small fw-bold text-muted">FULL NAME</label>
+              <div class="input-group input-group-sm shadow-sm rounded">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-person text-muted"></i></span>
+                <input type="text" formControlName="name" class="form-control border-start-0 ps-0"
+                       [class.is-invalid]="editCustomerFormGroup.controls['name'].touched && editCustomerFormGroup.controls['name'].invalid">
+              </div>
+              <div class="invalid-feedback extra-small">
                 Name is required (minimum 4 characters)
               </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Email <span class="text-danger">*</span></label>
-              <input type="email" formControlName="email" class="form-control"
-                     [class.is-invalid]="editCustomerFormGroup.controls['email'].touched && editCustomerFormGroup.controls['email'].invalid">
-              <div class="invalid-feedback">
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-muted">EMAIL ADDRESS</label>
+              <div class="input-group input-group-sm shadow-sm rounded">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+                <input type="email" formControlName="email" class="form-control border-start-0 ps-0"
+                       [class.is-invalid]="editCustomerFormGroup.controls['email'].touched && editCustomerFormGroup.controls['email'].invalid">
+              </div>
+              <div class="invalid-feedback extra-small">
                 Please enter a valid email address
               </div>
             </div>
-            <div class="d-flex gap-2">
-              <button type="submit" class="btn btn-success" [disabled]="editCustomerFormGroup.invalid">
-                <i class="bi bi-check-circle me-1"></i> Update
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-sm py-2 fw-bold shadow-sm" [disabled]="editCustomerFormGroup.invalid">
+                Update Customer <i class="bi bi-check2-circle ms-1"></i>
               </button>
-              <a routerLink="/customers" class="btn btn-secondary">
-                <i class="bi bi-arrow-left me-1"></i> Cancel
+              <a routerLink="/customers" class="btn btn-light btn-sm py-2 text-muted fw-bold">
+                Go Back
               </a>
             </div>
           </form>

@@ -1,27 +1,42 @@
-<div class="container mt-5">
+<div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="text-center">Login</h3>
+    <div class="col-md-5">
+      <div class="card shadow-lg">
+        <div class="card-header bg-white text-center py-4">
+          <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px;">
+            <i class="bi bi-bank2 text-white fs-2"></i>
+          </div>
+          <h3 class="fw-bold text-dark mb-0">Welcome Back</h3>
+          <p class="text-muted small">Please enter your credentials to login</p>
         </div>
-        <div class="card-body">
+        <div class="card-body px-4 py-4">
           <form [formGroup]="loginFormGroup" (ngSubmit)="handleLogin()">
-            <div class="form-group mb-3">
-              <label for="username">Username</label>
-              <input type="text" id="username" formControlName="username" class="form-control">
+            <div class="mb-3">
+              <label for="username" class="form-label small fw-bold">Username</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person text-muted"></i></span>
+                <input type="text" id="username" formControlName="username" class="form-control bg-light border-start-0" placeholder="Username">
+              </div>
             </div>
-            <div class="form-group mb-3">
-              <label for="password">Password</label>
-              <input type="password" id="password" formControlName="password" class="form-control">
+            <div class="mb-4">
+              <label for="password" class="form-label small fw-bold">Password</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
+                <input type="password" id="password" formControlName="password" class="form-control bg-light border-start-0" placeholder="••••••••">
+              </div>
             </div>
-            <div *ngIf="errorMessage" class="alert alert-danger">
-              {{ errorMessage }}
+            <div *ngIf="errorMessage" class="alert alert-danger py-2 small border-0 shadow-sm mb-4">
+              <i class="bi bi-exclamation-circle me-2"></i> {{ errorMessage }}
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="loginFormGroup.invalid">Login</button>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm" [disabled]="loginFormGroup.invalid">
+                Login <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
           </form>
         </div>
       </div>
+
     </div>
   </div>
 </div>
